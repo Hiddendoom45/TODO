@@ -20,16 +20,20 @@ import global.items.TimedItem;
 import monitor.monUtil.CompleteCallBack;
 import monitor.monUtil.DelayedBlock;
 import monitor.monUtil.DelayedQueue;
-
+/**
+ * used to monitor the items, and execute their tasks periododically
+ * @author Allen
+ *
+ */
 public class MonVar extends Vars {
 	private ArrayList<MonitorItem> monitoredIncomplete=new ArrayList<MonitorItem>();//list of items that are monitored that are incomplete
 	private ArrayList<MonitorItem> monitoredComplete=new ArrayList<MonitorItem>();//list of items that are monitored that are complete
 	private DelayedQueue<Task> tasks=new DelayedQueue<Task>();//list of currently planned tasks
 	private CompleteCallBack callback=new CompleteCallBack(this);//to set the completeness of tasks
-	
+	//current tasks that are running
 	private HashMap<Long,Task> runningTasks=new HashMap<Long,Task>();
 	
-	private boolean pause=false;
+	private boolean pause=false;//if the running of monitor is paused
 	
 	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(Settings.monThreadPoolSize);
 	
@@ -61,9 +65,11 @@ public class MonVar extends Vars {
 		}
 		return null;
 	}
+	//delayed block contains delay after which tasks will be executed
 	public ArrayList<DelayedBlock<? extends Task>> getPlannedTasks(){
 		return tasks.getQueue();
 	}
+	//called when a task is completed, does additional task of setting item to complete
 	public synchronized void taskCompleted(long taskID){
 		reload();
 		synchronized(tasks){
@@ -79,15 +85,18 @@ public class MonVar extends Vars {
 			taskCompleted(taskID);
 		}
 	}
+	//task is finished running, remove from running tasks
 	public synchronized void taskFinished(long taskID){
 		runningTasks.remove(taskID);
 	}
+	//if paused
 	public synchronized void setPause(boolean pause){
 		if(!pause){
 			this.notify();
 		}
 		this.pause=pause;
 	}
+	//sets arrays of monitor items
 	public synchronized void setMonitored(){
 		monitoredComplete.clear();
 		monitoredIncomplete.clear();
@@ -128,6 +137,7 @@ public class MonVar extends Vars {
 			}
 		}
 	}
+	//determine when each task will be executed
 	public synchronized void setTaskDates(){
 		synchronized(tasks){
 			tasks.clear();
@@ -145,6 +155,7 @@ public class MonVar extends Vars {
 			}
 		}
 	}
+	//reading stuffs
 	public void read(File xmlFile){
 		if(new Date(new File(Settings.fileSource).lastModified()).after(lastRead)){
 			super.read(xmlFile);

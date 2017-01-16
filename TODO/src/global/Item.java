@@ -1,5 +1,9 @@
 package global;
-
+/**
+ * Generic for all items, i.e. daily items, etc
+ * @author Allen
+ *
+ */
 public interface Item {
 	
 	public long getID();

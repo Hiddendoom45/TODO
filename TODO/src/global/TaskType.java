@@ -1,5 +1,9 @@
 package global;
-
+/**
+ * enum of task types, used for references
+ * @author Allen
+ *
+ */
 public enum TaskType {
 
 	Default,

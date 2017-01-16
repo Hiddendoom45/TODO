@@ -12,7 +12,11 @@ import XML_Tests.Elements;
 import global.Console;
 import global.Task;
 import global.TaskType;
-
+/**
+ * downloads a page
+ * @author Allen
+ *
+ */
 public class WebpageTask extends Task {
 	private URL url;
 	private File download;
@@ -79,7 +83,7 @@ public class WebpageTask extends Task {
 		try{
 			  UserAgent ua = new UserAgent();
 			  ua.visit(url.toString());
-			  ua.doc.saveCompleteWebPage(download);
+			  ua.doc.saveCompleteWebPage(download);//use jaunth's UA to save the document to file
 			}
 			catch(JauntException | IOException j){
 			  System.err.println(j);

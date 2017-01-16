@@ -7,7 +7,11 @@ import javax.swing.JMenuBar;
 import global.menus.EditorMenu;
 import global.menus.FileMenu;
 import global.menus.MonMenu;
-
+/**
+ * menu for viewer
+ * @author Allen
+ *
+ */
 public class ViewMainMenu extends JMenuBar {
 
 	/**

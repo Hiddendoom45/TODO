@@ -3,7 +3,7 @@ package monitor.monUtil;
 import java.util.Date;
 /**
  * adds a delay to an object E
- * 
+ * Used to determine delay before tasks can be executed
  * 
  * @author Allen
  *

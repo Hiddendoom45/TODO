@@ -8,7 +8,11 @@ import javax.swing.JMenuItem;
 
 import global.Vars;
 import monitor.MonMain;
-
+/**
+ * menu for monitor
+ * @author Allen
+ *
+ */
 public class MonMenu extends JMenu {
 
 	/**
@@ -18,17 +22,18 @@ public class MonMenu extends JMenu {
 
 	public MonMenu(final Vars var) {
 		super("Monitor");
+		//launch, that's it
 		JMenuItem MI_monitor=new JMenuItem("Launch Monitor");
 		add(MI_monitor);
 		
 		MI_monitor.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				MonMain mon;
-				if(var.getMon()==null||!var.getMon().getFrame().isShowing()){
+				if(var.getMon()==null||!var.getMon().getFrame().isShowing()){//if one doesn't exist create new
 					mon=new MonMain(var.getConsole(),var.getItemData());
 					var.setMon(mon);
 				}
-				else{
+				else{//if does focus on it
 					mon=var.getMon();
 				}
 			}

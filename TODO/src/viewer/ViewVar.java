@@ -9,8 +9,13 @@ import global.ItemData;
 import global.Settings;
 import global.TODOItem;
 import global.Vars;
-
+/**
+ * main class holding variable for viewer
+ * @author Allen
+ *
+ */
 public class ViewVar extends Vars {
+	//easy reference lists for items that are complete/incomplete
 	private ArrayList<TODOItem> complete= new ArrayList<TODOItem>();
 	private ArrayList<TODOItem> incomplete= new ArrayList<TODOItem>();
 	
@@ -64,6 +69,7 @@ public class ViewVar extends Vars {
 		lastRead=new Date();
 		return true;
 	}
+	//update the lists of complete/incomplete items
 	public ArrayList<TODOItem> updateIncomplete(){
 		incomplete.clear();
 		for(int i=0;i<dailies.size();i++){
@@ -134,7 +140,7 @@ public class ViewVar extends Vars {
 		//TODO add for other item types
 		return complete;
 	}
-	
+	//swapping the stae of the items
 	public void swapIncomplete(long ID){
 		reload();
 		getTODOItem(ID).taskComplete();
@@ -151,6 +157,7 @@ public class ViewVar extends Vars {
 		}
 		con.addInfo("[ViewVar] "+getTODOItem(ID).getName()+" changed to incomplete");
 	}
+	//deleteing an item
 	public void deleteItem(long ID){
 		reload();
 		con.addInfo("[ViewVar] "+getTODOItem(ID).getName()+" deleted");

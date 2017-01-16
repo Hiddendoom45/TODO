@@ -19,13 +19,18 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextField;
-
+/**
+ * additional settings for tasks
+ * @author Allen
+ *
+ */
 public class TaskSet extends JDialog {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3615462616189335440L;
+	//swing elements
 	private final JPanel contentPanel = new JPanel();
 	private DateTime timeout=new DateTime();
 	private JCheckBox CB_complete;
@@ -33,8 +38,8 @@ public class TaskSet extends JDialog {
 	private JCheckBox CB_hide;
 	private JButton okButton;
 	private JButton cancelButton;
-
-	private boolean cancel=true;
+//variables
+	private boolean cancel=true;//if cancels don't save data
 	private JLabel lblName;
 	private JTextField TF_name;
 
@@ -144,6 +149,7 @@ public class TaskSet extends JDialog {
 			return 1;
 		}
 	}
+	//get additional task setting, set by thi
 	public AdditionalTaskSetting getValues(){
 		AdditionalTaskSetting values=new AdditionalTaskSetting();
 		values.setMonitored(CB_monitor.isSelected());
@@ -153,6 +159,7 @@ public class TaskSet extends JDialog {
 		values.setName(TF_name.getText());
 		return values;
 	}
+	//set values if there was already something set in the item
 	public void setValues(boolean monitor,boolean hide,long time,String name,boolean completeOnFinish){
 		CB_hide.setSelected(hide);
 		CB_monitor.setSelected(monitor);

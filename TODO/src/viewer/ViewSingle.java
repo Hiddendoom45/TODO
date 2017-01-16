@@ -20,7 +20,11 @@ import editor.EditMain;
 import java.awt.Dimension;
 import javax.swing.JTextField;
 
-
+/**
+ * view single item
+ * @author Allen
+ *
+ */
 public class ViewSingle extends ViewGenerics {
 	
 	/**

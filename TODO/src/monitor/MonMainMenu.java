@@ -5,7 +5,11 @@ import javax.swing.JMenuBar;
 import global.menus.EditorMenu;
 import global.menus.FileMenu;
 import global.menus.ViewMenu;
-
+/**
+ * menu bar for monitor
+ * @author Allen
+ *
+ */
 public class MonMainMenu extends JMenuBar {
 	
 	private FileMenu fileMenu;

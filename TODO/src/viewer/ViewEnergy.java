@@ -25,7 +25,11 @@ import javax.swing.JSpinner;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
-
+/**
+ * view current energy items
+ * @author Allen
+ *
+ */
 public class ViewEnergy extends ViewGenerics{
 
 	/**
@@ -336,6 +340,7 @@ public class ViewEnergy extends ViewGenerics{
 		max=100;
 		}
 	}
+	//used to set the values for the energy display
 	public void setValues(boolean complete){
 		super.setValues(complete);
 		if(complete){
@@ -344,13 +349,13 @@ public class ViewEnergy extends ViewGenerics{
 				TF_priority.setText(""+energy.getPriority());
 				PB_energy.setMaximum(energy.getEnergyMax());
 				synchronized(this){
-				max=energy.getEnergyMax();
+				max=energy.getEnergyMax();//set max energy to max energy of item
 				Date current=new Date();
 				Date replenish=energy.getEnergyReplenish();
 				long split=replenish.getTime()-current.getTime();//time to replenish
-				this.current=max-(int)(split/(long)(energy.getEnergyURefill()*60000))-1;
-				tToRefill=(int) ((split%(long)(energy.getEnergyURefill()*60000))/1000);
-				tRefill=(int)(energy.getEnergyURefill()*60);
+				this.current=max-(int)(split/(long)(energy.getEnergyURefill()*60000))-1;//current energy
+				tToRefill=(int) ((split%(long)(energy.getEnergyURefill()*60000))/1000);//current time till refill of next energy unit
+				tRefill=(int)(energy.getEnergyURefill()*60);//used to determine time for each unit of energy to refill
 				PB_energy.setString("("+this.current+"/"+max+")");
 				PB_energy.setValue(this.current);
 				}
@@ -370,17 +375,19 @@ public class ViewEnergy extends ViewGenerics{
 			}
 		}
 	}
+	//used to count down energy timer
 	public void countDown(){
 		while (true){
 			synchronized(this){
-				if(current<max){
+				if(current<max){//if there's still energy to be filled
 					if(tToRefill>0){
-						tToRefill--;
+						tToRefill--;//decrement time till
 					}
-					else{
+					else{//if no time remaining, add unit of energy, reset
 						current++;
 						tToRefill=tRefill-1;
 					}
+					//set time display
 					java.awt.EventQueue.invokeLater(new Runnable() {
 						public void run() {
 							PB_energy.setValue(current);
@@ -394,6 +401,7 @@ public class ViewEnergy extends ViewGenerics{
 					});
 				}
 				else{
+					//set time display for when energy is filled
 					java.awt.EventQueue.invokeLater(new Runnable() {
 						public void run() {
 							PB_energy.setValue(max);

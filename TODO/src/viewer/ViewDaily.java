@@ -22,7 +22,11 @@ import editor.EditMain;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
-
+/**
+ * view current dailyitms
+ * @author Allen
+ *
+ */
 public class ViewDaily extends ViewGenerics{
 	/**
 	 * 

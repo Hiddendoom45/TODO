@@ -15,7 +15,11 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
 import java.awt.Dimension;
-
+/**
+ * overview of all items
+ * @author Allen
+ *
+ */
 public class ViewOverview extends ViewGenerics {
 	/**
 	 * 

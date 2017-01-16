@@ -5,12 +5,12 @@ package global;
  *
  */
 public class AdditionalTaskSetting {
-	private String name="Task";
-	private boolean taskComplete;
-	private long timeout;
-	private boolean monitored;
-	private boolean hide;
-
+	private String name="Task";//name
+	private boolean taskComplete;//if task is complete
+	private long timeout;//minimum time between consecutive execution of the task
+	private boolean monitored;//if monitored by monitor section
+	private boolean hide;//if the item the task is a part of is hidden
+	//setters and getters for the variables
 	public AdditionalTaskSetting() {
 	}
 	public String getName(){

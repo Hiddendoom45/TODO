@@ -3,7 +3,11 @@ package global;
 import java.util.Date;
 
 import monitor.monUtil.CallEvent;
-
+/**
+ * generics for items that can be monitored by the monitor system
+ * @author Allen
+ *
+ */
 public interface MonitorItem extends Item {
 	public Task getTask();
 	

@@ -32,12 +32,18 @@ import global.items.EnergyItem;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.DefaultComboBoxModel;
-
+/**
+ * Class for energy items, that countdown on a timer, used as a reminder for the energy mechanics found in many games
+ * counts down the the time remaining till energy is filled, once that occurs it will execute task
+ * @author Allen
+ *
+ */
 public class EditEnergy extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3249360708047474360L;
+	//swing components
 	private JTextField TF_name;
 	private JList<String> L_energy;
 	private Vector<String> energies=new Vector<String>();
@@ -47,13 +53,15 @@ public class EditEnergy extends JPanel {
 	private JButton B_task;
 	private JButton B_new;
 	private JButton B_delete;
+	private JTextField TF_replenish;
+	//global variables, var for all major variables, con is console/log
 	private EditVar var;
 	private Console con;
-	private JTextField TF_replenish;
 	
 	
+	//drag and drop, for insertion/ swap
 	private boolean mListPress=false;
-	private boolean kControl;
+	private boolean kControl;//for toggling between two, w/ control key
 
 	/**
 	 * Create the panel.
@@ -109,7 +117,7 @@ public class EditEnergy extends JPanel {
 		gbc_SP_energy.gridx = 2;
 		gbc_SP_energy.gridy = 1;
 		add(SP_energy, gbc_SP_energy);
-		
+		//set up list
 		L_energy = new JList<String>();
 		L_energy.setModel(new AbstractListModel<String>() {
 			/**
@@ -211,7 +219,7 @@ public class EditEnergy extends JPanel {
 		gbc_B_delete.gridx = 3;
 		gbc_B_delete.gridy = 7;
 		add(B_delete, gbc_B_delete);
-		
+		//various listeners to update value of the energy item in Edit var when something changes
 		Sp_max.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				int index=L_energy.getSelectedIndex();
@@ -287,6 +295,7 @@ public class EditEnergy extends JPanel {
 				}
 			}
 		});
+		//drag and drop items to move them around
 		L_energy.addMouseListener(new MouseAdapter() {
 			
 			@Override
@@ -339,6 +348,7 @@ public class EditEnergy extends JPanel {
 				}
 			}
 		});
+		//create new item
 		B_new.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EnergyItem energy=new EnergyItem(checkExisting(),var);
@@ -387,6 +397,7 @@ public class EditEnergy extends JPanel {
 			}
 		});
 	}
+	//extracts only the numbers from a text, accepts decimals
 	public String keepNum(String number){
 		char[] numbers=number.toCharArray();
 		String text="";
@@ -439,7 +450,7 @@ public class EditEnergy extends JPanel {
 				return name;
 			}
 		}
-		
+		//drag and drop, swap items
 		public void swapItems(int item, int insert){
 			if(item>-1&&insert>-1){
 				EnergyItem swap=var.getEnergy().get(item);
@@ -449,6 +460,7 @@ public class EditEnergy extends JPanel {
 				reset();
 			}
 		}
+		//drag and drop move items
 		public void moveItems(int item,int insert){
 			if(item>-1&&insert>-1){
 				EnergyItem swap=var.getEnergy().get(item);
@@ -457,6 +469,7 @@ public class EditEnergy extends JPanel {
 				reset();
 			}
 		}
+		//set values of all swing components from the data in edit var
 		public void setValues(){
 			int index=L_energy.getSelectedIndex();
 			if(index>-1){
@@ -468,6 +481,7 @@ public class EditEnergy extends JPanel {
 				TF_replenish.setText(""+((float)selected.getEnergyURefill()));
 			}
 		}
+		//reset used when starting to load everything
 		public void reset(){
 			energies.clear();
 			L_energy.clearSelection();
@@ -483,9 +497,11 @@ public class EditEnergy extends JPanel {
 				
 			}
 		}
+		//for jumping between editor and viewer
 		public JPanel getP_energy(){
 			return this;
 		}
+		//for jumping between editor and viewer jumps directly to the item and selects it
 		public void setItemIndex(long ID) {
 			for(int i=0;i<var.getEnergy().size();i++){
 				if(var.getEnergy().get(i).getID()==ID){

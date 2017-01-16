@@ -14,7 +14,11 @@ import global.Settings;
 
 
 
-
+/**
+ * main class for the monitor
+ * @author Allen
+ *
+ */
 public class MonMain implements Runnable {
 	
 	private MonMain main;
@@ -56,6 +60,7 @@ public class MonMain implements Runnable {
 				});
 			}
 		};
+		//read while GUI stuff is set up
 		executor.execute(read);
 		
 		//thread to update GUI a fixed intervals(10min,first after 5min)

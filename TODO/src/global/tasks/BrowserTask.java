@@ -13,7 +13,11 @@ import global.Console;
 import global.Settings;
 import global.Task;
 import global.TaskType;
-
+/**
+ * launches browser to specified URL
+ * @author Allen
+ *
+ */
 public class BrowserTask extends Task {
 	private URL url;
 	private boolean newWindow=false;
@@ -78,8 +82,9 @@ public class BrowserTask extends Task {
 		File writeFile;
 		while(true){
 			try {
+				//writes file to folder and has automator carry out launch action
 				if(count>0){
-				writeFile=new File(Settings.browserLaunchSource+"launch"+count+".txt");
+				writeFile=new File(Settings.browserLaunchSource+"launch"+count+".txt");//avoid dupes
 				}else{
 				writeFile=new File(Settings.browserLaunchSource+"launch.txt");
 				}

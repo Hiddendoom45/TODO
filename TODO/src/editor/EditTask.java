@@ -27,7 +27,11 @@ import global.tasks.BrowserTask;
 import global.tasks.DefaultAbstractTask;
 import global.tasks.NotifyTask;
 import global.tasks.WorkflowTask;
-
+/**
+ * Panel used to edit the tasks that are executed by the items at certain points
+ * @author Allen
+ *
+ */
 public class EditTask extends JDialog {
 	/*TODO when adding tasks methods to edit
 	 * setTasks()
@@ -38,19 +42,24 @@ public class EditTask extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = -608790542445556203L;
+	//main swing items
 	private final JPanel P_tasks = new JPanel();
 	private JPanel P_notify;
 	private JPanel P_browser;
 	private JPanel P_workflow;
+	//monitor and hide are values for the task, whether it is monitored by the monitor part and whether item should be hidden in viewer
 	private boolean monitor=true;
 	private boolean hide=false;
 	private Task task;
+	//layout for the different tasks
 	private CardLayout card;
+	//enum for selected task
 	private TaskType currentType=TaskType.Default;
+	//additional info for the task
 	private AdditionalTaskSetting taskSetting;
 	private TaskSet settings;
 	
-	
+	//tasks, and combo box to select between tasks
 	private EditNotifyTask notify;
 	private EditBrowserTask browser;
 	private EditWorkflowTask workflow;
@@ -135,13 +144,14 @@ public class EditTask extends JDialog {
 		}
 		
 	}
-	
+	//if closed via x button, task is set to null, no changes occur in item
 	public void close(boolean cancel){
 		if(cancel){
 			task=null;
 		}
 		dispose();
 	}
+	//called when additional task settings button is pressed, to set those additional settings
 	private void setAdditionalSettings(){
 		settings=new TaskSet(this);
 		settings.setValues(monitor, hide,task.getTimeout(),task.getName(),task.getCompleteOnFinish());
@@ -238,12 +248,24 @@ public class EditTask extends JDialog {
 		CB_TaskTypes.setSelectedIndex(selection);
 
 	}
+	/**
+	 * get task selected
+	 * @return
+	 */
 	public Task getTask(){
 		return task;
 	}
+	/**
+	 * get whether item is to be hidden or not
+	 * @return
+	 */
 	public boolean getHide(){
 		return hide;
 	}
+	/**
+	 * get whether task will be monitored by monitor part
+	 * @return
+	 */
 	public boolean getMonitored(){
 		return monitor;
 	}

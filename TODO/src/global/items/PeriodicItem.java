@@ -12,13 +12,17 @@ import global.Task;
 import global.Vars;
 import global.tasks.DefaultAbstractTask;
 import monitor.monUtil.CallEvent;
-
+/**
+ * Item that is reset at periodic intervals
+ * @author Allen
+ *
+ */
 public class PeriodicItem extends TODOItem implements MonitorItem {
 	private long timePeriod=1000;//in terms of whatever measurement the date system uses period interval in which completeness is reset
-	private Date dateRef=new Date(0);//used to reference to when periodic is referencing to i.e. 4:00PM as reference time or otherwis
+	private Date dateRef=new Date(0);//used to reference to when periodic is referencing to i.e. 4:00PM as reference time or otherwise
 	private boolean monitor=false;
 	private Date lastComplete=new Date(0);
-	private Task task=new DefaultAbstractTask();
+	private Task task=new DefaultAbstractTask();//default task/null
 	
 	public PeriodicItem(String name, Vars var) {
 		super(name, var);
@@ -65,8 +69,8 @@ public class PeriodicItem extends TODOItem implements MonitorItem {
 	}
 	public boolean getComplete(){
 		Date current=new Date();
-		Date lastReset;
-		if(current.after(dateRef)){
+		Date lastReset;//last time task was reset
+		if(current.after(dateRef)){//to determine the last time in which it should've reset, based on whether it's currently before or after the reference data
 			long time=current.getTime()-dateRef.getTime();
 			long split=time%timePeriod;//get the time since the last periodic reset
 			lastReset=new Date(current.getTime()-split);
@@ -75,7 +79,7 @@ public class PeriodicItem extends TODOItem implements MonitorItem {
 			long time=dateRef.getTime()-current.getTime();
 			long split=time%timePeriod;//time till the next periodic reset
 			lastReset=new Date(current.getTime()-(timePeriod-split));//last reset time>>(timeperiod-split)=time since reset
-		}
+		}//if after or not determine if complete
 		if(lastReset.after(lastComplete)){
 			return false;
 		}
@@ -120,7 +124,7 @@ public class PeriodicItem extends TODOItem implements MonitorItem {
 
 	public Date getNextTaskDate() {
 		Date current=new Date();
-		Date nextReset;
+		Date nextReset;//next time in which item would reset
 		if(current.after(dateRef)){
 			long time=current.getTime()-dateRef.getTime();
 			long split=time%timePeriod;//get the time since the last periodic reset

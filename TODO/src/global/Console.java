@@ -26,7 +26,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+/**
+ * used to track and log events in a frame
+ * @author Allen
+ *
+ */
 public class Console extends JFrame {
 
 	/**
@@ -92,13 +96,13 @@ public class Console extends JFrame {
 		P_options.add(B_close);
 		
 		//action listeners after everything
-		
+		//clears the text in console
 		B_clear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TA_console.setText("");
 			}
 		});
-		
+		//save console to file location selected
 		B_save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc=new JFileChooser();
@@ -115,30 +119,33 @@ public class Console extends JFrame {
 			}
 		});
 		
-		
+		//whether it uses line wrapping or not
 		TB_wrap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TA_console.setLineWrap(TB_wrap.isSelected());
 			}
 		});
-		
+		//close it, hides from view, can be shown later, keeps information
 		B_close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				console.setVisible(false);
 			}
 		});
+		//save console when window is closed
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowDeactivated(WindowEvent e) {
 				saveConsole("");
 			}
 		});
+		//save console
 		Runnable save=new Runnable(){
 			public void run(){
 				saveConsole("");
 				System.gc();
 			}
 		};
+		//update text in console with what's been logged
 		Runnable update=new Runnable(){
 			public void run(){
 				synchronized (this){
@@ -153,9 +160,11 @@ public class Console extends JFrame {
 				}
 			}
 		};
+		//execute the two tasks periodically 
 		executor.scheduleAtFixedRate(save, 5, 2, TimeUnit.MINUTES);//loop auto save every 2 minute or so
 		executor.scheduleAtFixedRate(update, 5, 10, TimeUnit.SECONDS);//loop update GUI every 10 sec
 	}
+	//used to log items
 	private synchronized void addString(final String msg){
 		final Date date= new Date();
 		final String dateString=DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).format(date);
@@ -164,6 +173,7 @@ public class Console extends JFrame {
 		consoleAppend+=append;//adds to buffer of text to append to the console, reduces lag when a lot of text needs to be appended
 		
 	}
+	//various different things hat can be logged
 	public void addError(final String msg){
 		addString("[ERR]"+msg+"\n");
 	}
@@ -185,6 +195,7 @@ public class Console extends JFrame {
 	public void addSeperator(final String msg){
 		addString("****-----****"+msg+"****-----****\n");
 	}
+	//saving of the console
 	public void saveConsole(String location){
 		File file;
 		if(location.equals("")){		

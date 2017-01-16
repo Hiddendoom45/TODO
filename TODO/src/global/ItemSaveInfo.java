@@ -1,5 +1,9 @@
 package global;
-
+/**
+ * used to index items, contains data used to reference the item
+ * @author Allen
+ *
+ */
 public class ItemSaveInfo {
 	private int index=-1;
 	private int hashCode=0;

@@ -6,7 +6,11 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
-
+/**
+ * ?
+ * @author Allen
+ *
+ */
 public class EditSettings extends JPanel {
 
 	/**

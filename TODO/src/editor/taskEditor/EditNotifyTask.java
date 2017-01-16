@@ -12,13 +12,18 @@ import global.tasks.NotifyTask;
 
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-
+/**
+ * task that is used to create an apple notification using automator(this won't work unless you have the same or similar setup)
+ * @author Allen
+ *
+ */
 public class EditNotifyTask extends JPanel implements EditTaskGenerics{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8379026677554816257L;
+	//variables, title of notification and the messsage in it
 	private JTextField TF_title;
 	private JTextArea TA_message;
 
@@ -75,10 +80,12 @@ public class EditNotifyTask extends JPanel implements EditTaskGenerics{
 		task.setMessage(TA_message.getText());
 		return task;
 	}
+	//set values to ones of the task provided
 	public void setValues(NotifyTask task){
 		TF_title.setText(task.getTitle());
 		TA_message.setText(task.getMessage());
 	}
+	//to allow eclipse to render things properly
 	@Override
 	public JPanel getPanel() {
 		return this;

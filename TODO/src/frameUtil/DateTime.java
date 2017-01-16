@@ -10,7 +10,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import frameUtil.Listeners.JSpinnerListeners;
-
+/**
+ * basic panel containing day, hour, minute spinner, and method to convert time to miliseconds
+ * @author Allen
+ *
+ */
 public class DateTime extends JPanel {
 
 	/**
@@ -79,12 +83,18 @@ public class DateTime extends JPanel {
 			}
 		});
 	}
+	//to get eclipse to render the panel properly
 	public JPanel getPanel(){
 		return this;
 	}
+	//conversion
 	private void setTimeValue() {
 		time=(long)((86400*(long)(int)Sp_d.getValue())+(3600*(int)Sp_h.getValue())+(60*(int)Sp_m.getValue())+(int)Sp_s.getValue())*1000;
 	}
+	/**
+	 * sets values in spinners based on time
+	 * @param time time to set in spinners in miliseconds
+	 */
 	public void setTime(long time){
 		time=time/1000;
 		String s=time%60+"";
@@ -96,6 +106,9 @@ public class DateTime extends JPanel {
     	Sp_h.setValue(Integer.parseInt(h));
     	Sp_d.setValue(Integer.parseInt(d));
 	}
+	/**
+	 * @return time value in miliseconds
+	 */
 	public long getTime(){
 		return time;
 	}

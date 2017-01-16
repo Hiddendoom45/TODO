@@ -34,19 +34,24 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+/**
+ * Panel to edit task that are to be executed on a daily basis, reseting at a specific time
+ * @author Allen
+ *
+ */
 public class EditDaily extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -162234014253583183L;
-	private JTextField TF_name;
+	//globalish variables, var is used to hold most main variables, con is console/log
 	private EditVar var;
 	private Console con;
 	private Vector<String> dailies=new Vector<String>();
 	
 	
 	//component variables
+	private JTextField TF_name;
 	private JList<String> L_daily;
 	private JSpinner CB_H;
 	private JSpinner CB_M;
@@ -54,7 +59,7 @@ public class EditDaily extends JPanel {
 	private JComboBox<String> CB_priority;
 	
 	private boolean mListPress=false;//used to drag and drop items around, holds state of mouse press
-	private boolean kControl=false;
+	private boolean kControl=false;//same, changes to swap items around instead of insert at point
 	
 
 	/**
@@ -126,7 +131,7 @@ public class EditDaily extends JPanel {
 		gbc_SP_dailies.gridx = 3;
 		gbc_SP_dailies.gridy = 2;
 		add(SP_dailies, gbc_SP_dailies);
-		
+		//set up lists
 		L_daily = new JList<String>();
 		L_daily.setModel(new AbstractListModel<String>() {
 			/**
@@ -218,7 +223,7 @@ public class EditDaily extends JPanel {
 		gbc_B_delete.gridx = 4;
 		gbc_B_delete.gridy = 6;
 		add(B_delete, gbc_B_delete);
-		
+		//various listeners to update value of the daily item in Edit var when something changes
 		CB_H.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				int index=L_daily.getSelectedIndex();
@@ -346,7 +351,7 @@ public class EditDaily extends JPanel {
 				}
 			}
 		});
-		
+		//create a new daily item
 		B_new.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DailyItem daily=new DailyItem(checkExisting(),var);
@@ -440,6 +445,7 @@ public class EditDaily extends JPanel {
 			return name;
 		}
 	}
+	//used for drag and drop, to swap items, toggled with control
 	public void swapItems(int item, int insert){
 		if(item>-1&&insert>-1){
 			DailyItem swap=var.getDaily().get(item);
@@ -449,6 +455,7 @@ public class EditDaily extends JPanel {
 			reset();
 		}
 	}
+	//just to move and insert at point
 	public void moveItems(int item,int insert){
 		if(item>-1&&insert>-1){
 			DailyItem swap=var.getDaily().get(item);
@@ -457,6 +464,7 @@ public class EditDaily extends JPanel {
 			reset();
 		}
 	}
+	//called everytime it eneds to update the value in the swing components, usually when selected daily item changes in the list or new item creation
 	public void setValues(){
 		int index=L_daily.getSelectedIndex();
 		if(index>-1){
@@ -468,6 +476,7 @@ public class EditDaily extends JPanel {
 			CB_priority.setSelectedIndex(selected.getPriority()-1);
 		}
 	}
+	//reset things reread things from main variable class
 	public void reset(){
 		dailies.clear();
 		L_daily.clearSelection();
@@ -482,10 +491,10 @@ public class EditDaily extends JPanel {
 		L_daily.updateUI();
 		con.addMsg("[Daily] data reset/refreshed");
 	}
-	
 	public JPanel getP_Daily(){
 		return this;
 	}
+	//used to swap between viewer and editor, jumps directly to item
 	public void setItemIndex(long ID) {
 		for(int i=0;i<var.getDaily().size();i++){
 			if(var.getDaily().get(i).getID()==ID){

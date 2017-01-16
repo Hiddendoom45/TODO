@@ -21,7 +21,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import java.awt.Dimension;
 
-
+/**
+ * view periodic items
+ * @author Allen
+ *
+ */
 public class ViewPeriodic extends ViewGenerics{
 
 	/**
@@ -299,9 +303,10 @@ public class ViewPeriodic extends ViewGenerics{
 		while(true){
 			synchronized(this){
 				if(timeToReset>0){
-					timeToReset--;
+					timeToReset--;//countdown time till next time periodic item will reset
 				}
 			}
+			//sets time display
 			java.awt.EventQueue.invokeLater(new Runnable() {
 			    public void run() {
 			    	if(timeToReset>0){

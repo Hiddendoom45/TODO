@@ -1,5 +1,9 @@
 package global;
-
+/**
+ * different types of items
+ * @author Allen
+ *
+ */
 public enum ItemType {
 	
 	DailyItem("dailyItem"),

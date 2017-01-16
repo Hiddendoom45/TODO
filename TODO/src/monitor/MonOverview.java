@@ -21,17 +21,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+/**
+ * panel displaying overview of all items monitored
+ * @author Allen
+ *
+ */
 public class MonOverview extends JPanel implements Runnable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4922953733351817236L;
-	private JTextField TF_time;
+	private JTextField TF_time;//to show time till next run
+	//arrays to hold lists of items that are either complete or incomplete
 	private ArrayList<String> incomplete=new ArrayList<String>();
 	private ArrayList<String> complete=new ArrayList<String>();
+	//maps the id to the index in the var arrays
 	private ArrayList<Long> incompleteID=new ArrayList<Long>();
 	private ArrayList<Long> completeID=new ArrayList<Long>();
-	
+	//swing elements
 	private MonVar var;
 	private JButton B_update;
 	private JList<String> L_incomplete;
@@ -146,7 +153,7 @@ public class MonOverview extends JPanel implements Runnable {
 		gbc_TF_time.gridy = 1;
 		add(TF_time, gbc_TF_time);
 		TF_time.setColumns(10);
-		
+		//pause the monitor and execution of tasks
 		B_pause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(B_pause.getText().equals("Pause")){
@@ -159,7 +166,7 @@ public class MonOverview extends JPanel implements Runnable {
 				}
 			}
 		});
-		
+		//update from file
 		B_update.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				update();
@@ -183,7 +190,7 @@ public class MonOverview extends JPanel implements Runnable {
 		});
 		
 		
-		
+		//countdowns time till next run
 		Thread t=new Thread(){
 			public void run(){
 				countDown();
@@ -192,6 +199,7 @@ public class MonOverview extends JPanel implements Runnable {
 		t.setDaemon(true);
 		t.start();
 	}
+	//sets the values of everything, called when selected item changes
 	public void setValues(boolean complete){
 		if(complete){
 			if(L_complete.getSelectedIndex()>-1){
@@ -275,6 +283,7 @@ public class MonOverview extends JPanel implements Runnable {
 			});
 		}
 	}
+	//methods used to update the lists
 	public void updateIncomplete(){
 		incomplete.clear();
 		incompleteID.clear();
@@ -329,6 +338,7 @@ public class MonOverview extends JPanel implements Runnable {
 		completeID.add(item.getID());
 		
 	}
+	//reset everything/reload
 	public void reset(){
 		updateIncomplete();
 		updateComplete();

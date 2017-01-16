@@ -47,6 +47,7 @@ public class ViewGenerics extends JPanel implements Runnable {
 			}
 		});
 	}
+	//sets most of the main listeners used
 	public void setListeners(){
 		TA_description.setWrapStyleWord(true);
 		L_incomplete.setModel(new AbstractListModel<String>() {
@@ -143,6 +144,7 @@ public class ViewGenerics extends JPanel implements Runnable {
 			}
 		});
 	}
+	//filter used to determine which type of item to display
 	public void setFilter(ItemType filter){
 		this.filter.clear();
 		this.filter.add(filter);
@@ -196,7 +198,7 @@ public class ViewGenerics extends JPanel implements Runnable {
 		    }
 		});
 	}
-	
+	//update the lists displaying complete/incomplete tasks
 	private void updateIncomplete(){
 		incomplete.clear();
 		incompleteID.clear();

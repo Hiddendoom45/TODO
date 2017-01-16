@@ -8,7 +8,11 @@ import javax.swing.JMenuItem;
 
 import global.Vars;
 import viewer.ViewMain;
-
+/**
+ * menu for viewer
+ * @author Allen
+ *
+ */
 public class ViewMenu extends JMenu {
 
 	/**
@@ -25,11 +29,11 @@ public class ViewMenu extends JMenu {
 		MI_view.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				ViewMain view;
-					if(var.getView()==null||!var.getView().isShowing()){
+					if(var.getView()==null||!var.getView().isShowing()){//if viwer exists, if not create new
 						view=new ViewMain(var.getConsole(),var.getItemData());
 						var.setView(view);
 					}
-					else{
+					else{//if exists, focus on it
 						view=var.getView();
 						 
 					}

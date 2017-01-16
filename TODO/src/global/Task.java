@@ -98,6 +98,7 @@ public abstract class Task implements Runnable{
 	public void setName(String name){
 		this.name=name;
 	}
+	//parse to xml elements to save
 	public Elements getElementsRepresentation(){
 		Elements root=new Elements("task",new Attribute[]{new Attribute("type",""+type),new Attribute("name",name)});
 		
@@ -109,12 +110,14 @@ public abstract class Task implements Runnable{
 		
 		return root;
 	}
+	//executed when task is complete, calls back to monitor thread to notify it
 	public void setCallback(CompleteCallBack callback){
 		this.callback.setCompleteCallBack(callback);
 	}
 	public void itemCompleted(){
 		lastRan=new Date(0);
 	}
+	//time before task can be executed again
 	public Date getTimeoutFinish(){
 		return new Date(lastRan.getTime()+Timeout);
 	}
@@ -138,11 +141,11 @@ public abstract class Task implements Runnable{
 		doTask();
 		taskFinished(e);
 	}
-	
+	//implemented by sub classes, does task
 	public abstract void doTask();
-	
+	//called when task is finished
 	protected void taskFinished(CallEvent e){
-		if(completeOnFinish){
+		if(completeOnFinish){//whether task was complete or not, whether monitor should change the state of the item or not
 			e.getCallBack().addCompletedTask(ID);
 		}
 		else{

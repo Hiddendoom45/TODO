@@ -28,6 +28,7 @@ public class EditMain extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -4055908655102159762L;
+	//main tab plane containing all the panels for editing the items
 	private JTabbedPane TP_Main;
 	private JPanel contentPane;
 	private JPanel P_Daily;
@@ -35,6 +36,7 @@ public class EditMain extends JFrame {
 	private JPanel P_Single;
 	private JPanel P_Energy;
 	private JPanel P_Periodic;
+	//classes for those items and the global ones, var and con used for pretty much everything
 	private EditVar var;
 	private EditDaily daily;
 	private EditSingle single;
@@ -70,6 +72,7 @@ public class EditMain extends JFrame {
 	 */
 	public EditMain(Console con,ItemData data) {
 		this.con=con;
+		//determine if 
 		if(data==null){
 			var=new EditVar(con);
 		}

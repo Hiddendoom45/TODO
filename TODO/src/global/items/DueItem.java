@@ -15,7 +15,7 @@ import monitor.monUtil.CallEvent;
  * class to handle items that are due at some point(really should be completed) and 
  * ups the priority as that point gets closer
  * @author Allen
- *
+ *NOTE: incomplete, dropped project before this was completed
  */
 public class DueItem extends TODOItem implements MonitorItem {
 	//private Date dueDate;

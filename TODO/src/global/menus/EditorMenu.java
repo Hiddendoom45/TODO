@@ -9,7 +9,11 @@ import javax.swing.JMenuItem;
 
 import editor.EditMain;
 import global.Vars;
-
+/**
+ * menu for editor
+ * @author Allen
+ *
+ */
 public class EditorMenu extends JMenu {
 	private Vars var;
 
@@ -21,12 +25,12 @@ public class EditorMenu extends JMenu {
 	public EditorMenu(Vars var) {
 		super("Edit");
 		this.var=var;
-		
+		//launch the editor frame
 		JMenuItem MI_edit=new JMenuItem("Launch Editor");
 		add(MI_edit);
 		
 		addSeparator();
-		
+		//launch each of its panels
 		JMenuItem MI_editDaily=new JMenuItem("Edit Dailies");
 		add(MI_editDaily);
 		
@@ -74,17 +78,18 @@ public class EditorMenu extends JMenu {
 			}
 		});
 	}
+	//used to launch editor, and set its tab
 	private void launchEditor(int tab){
 		EditMain edit;
-		if(var.getEdit()==null||!var.getEdit().isShowing()){
+		if(var.getEdit()==null||!var.getEdit().isShowing()){//chec if it exits, if it doesn't create new
 			edit=new EditMain(var.getConsole(),var.getItemData());
 			var.setEdit(edit);
 		}
-		else{
+		else{//focus on existing, since exists
 			edit=var.getEdit();
 		}
 		edit.setVisible(true);
-		if(tab>=0){
+		if(tab>=0){//if a tab is selected, will switch to it
 			edit.setSelected(tab, 0);
 		}
 	}

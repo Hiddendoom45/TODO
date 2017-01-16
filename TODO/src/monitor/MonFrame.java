@@ -8,7 +8,11 @@ import javax.swing.border.EmptyBorder;
 
 import global.Console;
 import javax.swing.JTabbedPane;
-
+/**
+ * main frame for the monitor, used to monitor items and execute their tasks
+ * @author Allen
+ *
+ */
 public class MonFrame extends JFrame {
 
 	/**

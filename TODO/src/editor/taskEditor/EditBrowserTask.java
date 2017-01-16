@@ -15,13 +15,18 @@ import java.net.URL;
 
 import javax.swing.event.CaretListener;
 import javax.swing.event.CaretEvent;
-
+/**
+ * task that is to launch browser to specific web page when executed
+ * @author Allen
+ *
+ */
 public class EditBrowserTask extends JPanel implements EditTaskGenerics {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1020668274827875667L;
+	//variables, just the url
 	private JTextField TF_url;
 	private String displayText="";
 
@@ -67,6 +72,7 @@ public class EditBrowserTask extends JPanel implements EditTaskGenerics {
 		TF_url.setColumns(10);
 		
 	}
+	//draw string whether url is valid or not, centers text
 	 public void paintComponent(Graphics g) {
 	        super.paintComponent(g);      
 	        g.drawString(displayText, (this.getWidth()/2)-(displayText.length()*2), 28);
@@ -78,11 +84,13 @@ public class EditBrowserTask extends JPanel implements EditTaskGenerics {
 		return task;
 		
 	}
+	//set values to the values of the task provided
 	public void setValues(BrowserTask task){
 		try{
 			TF_url.setText(task.getURL().toString());
 		}catch(Exception e){};
 	}
+	//to allow eclipse to render panel properly
 	@Override
 	public JPanel getPanel() {
 		return this;

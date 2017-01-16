@@ -10,7 +10,11 @@ import global.Console;
 import global.Settings;
 import global.Task;
 import global.TaskType;
-
+/**
+ * executes an automator workflow
+ * @author Allen
+ *
+ */
 public class WorkflowTask extends Task {
 	private File workflow;//location of the workflow to run
 	private String inputs;//additional input give to the workflow when running
@@ -58,7 +62,7 @@ public class WorkflowTask extends Task {
 		while(true){
 			try {
 				System.out.println("writefile");
-				if(count>0){
+				if(count>0){//write file to location, folder action detects write, and executes workflow specified
 				writeFile=new File(Settings.workflowSource+"workflow"+count+".txt");
 				}else{
 				writeFile=new File(Settings.workflowSource+"workflow.txt");

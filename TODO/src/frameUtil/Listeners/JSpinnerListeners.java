@@ -5,9 +5,18 @@ import java.awt.Dimension;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
+/**
+ * basic methods for spinners
+ * @author Allen
+ *
+ */
 public class JSpinnerListeners {
-
+	/**
+	 * limit max/min value of spinner
+	 * @param max max value which spinner can't go above
+	 * @param min min value which spinner can't go below
+	 * @return listener that does this
+	 */
 	public static ChangeListener MaxMinLimiter(final int max,final int min){
 		return new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -16,6 +25,12 @@ public class JSpinnerListeners {
 			
 		};
 	}
+	/**
+	 * limit max/min value of spinner
+	 * @param e event in which will trigger this
+	 * @param max max value which spinner can't go above
+	 * @param min min value which spinner can't go below
+	 */
 	public static void MaxMinLimiter(ChangeEvent e,int max, int min){
 		JSpinner spin=(JSpinner) (e.getSource());
 		if((int)spin.getValue()>max){
@@ -25,6 +40,11 @@ public class JSpinnerListeners {
 			spin.setValue(min);
 		}
 	}
+	/**
+	 * limit max value of spinner
+	 * @param max max value which spinner can't go above
+	 * @return listner that does this
+	 */
 	public static ChangeListener MaxLimiter(final int max){
 		return new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -32,6 +52,11 @@ public class JSpinnerListeners {
 			}
 		}; 
 	}
+	/**
+	 * limit max value of spinner
+	 * @param e
+	 * @param max
+	 */
 	public static void MaxLimiter(ChangeEvent e,final int max){
 		JSpinner spin=(JSpinner) (e.getSource());
 		if((int)spin.getValue()>max){

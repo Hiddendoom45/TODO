@@ -14,13 +14,17 @@ import java.io.File;
 
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-
+/**
+ * launches automator workflow
+ * @author Allen
+ *
+ */
 public class EditWorkflowTask extends JPanel implements EditTaskGenerics {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 327991311827383380L;
-	
+	//directory of workflow and the parameters to put into it on execution
 	private JTextField TF_dir;
 	private JTextArea TA_inputs;
 

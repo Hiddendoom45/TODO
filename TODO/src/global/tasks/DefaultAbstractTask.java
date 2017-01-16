@@ -3,6 +3,11 @@ import XML_Tests.Attribute;
 import XML_Tests.Elements;
 import global.Task;
 import global.TaskType;
+/**
+ * null task
+ * @author Allen
+ *
+ */
 
 public class DefaultAbstractTask extends Task{
 

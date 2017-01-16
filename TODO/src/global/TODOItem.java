@@ -2,13 +2,17 @@ package global;
 
 import XML_Tests.Attribute;
 import XML_Tests.Elements;
-
+/**
+ * generic item for todo list
+ * @author Allen
+ *
+ */
 public abstract class TODOItem implements Item {
 	private long ID=0;
 	protected String name="";
 	protected String description="";
 	protected int priority=1;
-	protected boolean complete=false;
+	protected boolean complete=false;//whether item is completed or not
 	protected boolean hide=false;//whether to hide the task from viewers or not
 	protected Vars var;
 	

@@ -36,19 +36,26 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
 
+/**
+ * for periodic items, stuff that occur in a periodic fashion, resets every x period
+ * @author Allen
+ *
+ */
 public class EditPeriodic extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4866351213339964500L;
+	//main global variables var, for all the variables, con for console/log
 	private EditVar var;
 	private Console con;
 	private Vector<String> periodics=new Vector<String>();
 	private JTextField TF_name;
 	
-	private boolean mListPress=false;//used to drag and drop items around, holds state of mouse press
-	private boolean kControl=false;
+	private boolean mListPress=false;//used to drag and drop items around(on list), holds state of mouse press
+	private boolean kControl=false;//drag and drop, swap items around whether control is pressed
+	//swing elements
 	private JList<String> L_periodic;
 	private JComboBox<String> CB_priority;
 	private JTextArea TA_description;
@@ -116,7 +123,7 @@ public class EditPeriodic extends JPanel {
 		gbc_SP_periodic.gridx = 2;
 		gbc_SP_periodic.gridy = 1;
 		add(SP_periodic, gbc_SP_periodic);
-		
+		//set up list
 		L_periodic = new JList<String>();
 		L_periodic.setModel(new AbstractListModel<String>() {
 			/**
@@ -236,6 +243,7 @@ public class EditPeriodic extends JPanel {
 		gbc_B_delete.gridx = 3;
 		gbc_B_delete.gridy = 7;
 		add(B_delete, gbc_B_delete);
+		//various listeners that will change the value of variables in edit var whenever something is changed
 		Sp_d.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				int index=L_periodic.getSelectedIndex();
@@ -336,6 +344,7 @@ public class EditPeriodic extends JPanel {
 				}
 			}
 		});
+		//used for drag and drop of list
 		L_periodic.addMouseListener(new MouseAdapter() {
 			
 			@Override
@@ -387,7 +396,7 @@ public class EditPeriodic extends JPanel {
 				}
 			}
 		});
-
+		//create new item
 		B_new.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PeriodicItem daily=new PeriodicItem(checkExisting(),var);
@@ -435,14 +444,13 @@ public class EditPeriodic extends JPanel {
 				}
 			}
 		});
-		
-		
-
 	}
+	//sets the period in which completion will reset, various calculations to convert days, hours, minutes, seconds to miliseconds
 	public void setPeriod(){
 		long period=(long)((86400*(int)Sp_d.getValue())+(3600*(int)Sp_h.getValue())+(60*(int)Sp_m.getValue())+(int)Sp_s.getValue())*1000;
 		var.getPeriodic().get(L_periodic.getSelectedIndex()).setTimePeriod(period);
 	}
+	//extract numbers from string, accepts decimals
 	public String keepNum(String number){
 		char[] numbers=number.toCharArray();
 		String text="";
@@ -496,6 +504,7 @@ public class EditPeriodic extends JPanel {
 				return name;
 			}
 		}
+		//drag and dropping of items around in list
 		public void swapItems(int item, int insert){
 			if(item>-1&&insert>-1){
 				PeriodicItem swap=var.getPeriodic().get(item);
@@ -505,6 +514,7 @@ public class EditPeriodic extends JPanel {
 				reset();
 			}
 		}
+		//drag and dropping of items around in list
 		public void moveItems(int item,int insert){
 			if(item>-1&&insert>-1){
 				PeriodicItem swap=var.getPeriodic().get(item);
@@ -513,6 +523,7 @@ public class EditPeriodic extends JPanel {
 				reset();
 			}
 		}
+		//sets the values in the swing components, called everytime the selected item changes or something else changes it etc
 		public void setValues(){
 			int index=L_periodic.getSelectedIndex();
 			if(index>-1){
@@ -531,6 +542,7 @@ public class EditPeriodic extends JPanel {
 		    	Sp_d.setValue(d);
 			}
 		}
+		//resets things, loads things
 		public void reset(){
 			periodics.clear();
 			L_periodic.clearSelection();
@@ -547,9 +559,11 @@ public class EditPeriodic extends JPanel {
 			L_periodic.updateUI();
 			con.addMsg("[Daily] data reset/refreshed");
 		}
+		//used to get eclipse to render panel properly
 		public JPanel getP_periodic(){
 			return this;
 		}
+		//used to switch between the different parts so that it'll jump to selected item in viewer
 		public void setItemIndex(long ID) {
 			for(int i=0;i<var.getPeriodic().size();i++){
 				if(var.getPeriodic().get(i).getID()==ID){

@@ -21,21 +21,26 @@ import global.tasks.NotifyTask;
 import global.tasks.WorkflowTask;
 import monitor.MonMain;
 import viewer.ViewMain;
-
+/**
+ * main class holding the importnatn variables
+ * @author Allen
+ *
+ */
 public class Vars {
+	//console/logger
 	protected Console con;
-
+	//various items stored in arrays and the ids
 	protected ArrayList<Long> ID;
 	protected ArrayList<DailyItem> dailies;
 	protected ArrayList<TimedItem> timed;
 	protected ArrayList<SingleItem> single;
 	protected ArrayList<PeriodicItem> periodic;
 	protected ArrayList<EnergyItem> energy;
-	
+	//used to determine if data saved on file has been modified or not
 	protected Date lastRead=new Date(0);
-
+	//used to modify only items that have changed since last read
 	private ItemSaveInfoUtility saveInfo=new ItemSaveInfoUtility();
-
+	//constructor
 	public Vars(Console con){
 		this.con=con;
 		ID=new ArrayList<Long>();
@@ -45,6 +50,7 @@ public class Vars {
 		periodic=new ArrayList<PeriodicItem>();
 		energy=new ArrayList<EnergyItem>();
 	}
+	//constructor for use when another part's aready launched i.e. monitor, editor or viewer(likely failed)
 	public Vars(Console con,ItemData data){
 		this.con=con;
 		dailies=data.getDailies();
@@ -62,6 +68,7 @@ public class Vars {
 	public ArrayList<Long> getIDs(){
 		return ID;
 	}
+	//methods to get each of the items
 	public ArrayList<DailyItem> getDaily() {
 		return dailies;
 	}
@@ -117,6 +124,7 @@ public class Vars {
 		}
 		return null;
 	}
+	//get the main classes for each of the parts(again not sure if sucessful, around the time I gave up on program)
 	public EditMain getEdit() {
 		return Exasperation.edit;
 	}
@@ -126,6 +134,7 @@ public class Vars {
 	public MonMain getMon(){
 		return Exasperation.mon;
 	}
+	//supposed to have main data of this var class to be transferred to the var class of other parts(not sure if sucessufl)
 	public ItemData getItemData(){
 		ItemData data=new ItemData();
 		data.setDailies(dailies);
@@ -145,6 +154,7 @@ public class Vars {
 	public void setMon(MonMain mon){
 		Exasperation.mon=mon;
 	}
+	//when removing item, remove ID so it can be used again
 	public boolean removeItem(long ID){
 		removeID(ID);
 		for(int i=0;i<dailies.size();i++){
@@ -179,6 +189,7 @@ public class Vars {
 		//TODO complete for other types
 		return false;
 	}
+	//record state of items
 	public synchronized void register(){
 		saveInfo.register(dailies);
 		saveInfo.register(energy);
@@ -186,12 +197,13 @@ public class Vars {
 		saveInfo.register(single);
 		saveInfo.register(timed);
 	}
+	//read from file
 	public synchronized void read(File xmlFile){
 		//reset();
 		register();
-		con.addSeperator("Read start");
+		con.addSeperator("Read start");//log
 		XMLStAXFile xml=new XMLStAXFile(xmlFile);
-		if(XMLresetread(xml)){
+		if(XMLresetread(xml)){//parsing for each of the items
 			ArrayList<Elements> dailies=xml.parseToElements(new Attribute("type","dailyItem"));
 			for(int i=0;i<dailies.size();i++){
 				if(saveInfo.getSaveState(dailies.get(i))!=ItemSaveInfoUtility.ITEM_SAME){
@@ -294,6 +306,7 @@ public class Vars {
 		register();
 
 	}
+	//used to condense code, resets XML reader
 	private boolean XMLresetread(XMLStAXFile xml){
 		int tries=0;
 		while(tries<4){
@@ -312,6 +325,7 @@ public class Vars {
 		}
 		return false;
 	}
+	//write to file
 	public synchronized void write(File xmlFile){
 		con.addSeperator("Write start");
 		XMLStAXFile xml=new XMLStAXFile(xmlFile);
@@ -363,6 +377,7 @@ public class Vars {
 			}
 		}
 	}
+	//resets everything, clears data
 	public synchronized void reset(){
 		ID.clear();
 		timed.clear();
@@ -372,6 +387,7 @@ public class Vars {
 		energy.clear();
 		//TODO add for more
 	}
+	//parsing for the tasks the items have
 	public static Task decodeTask(Elements task,Console con,Long id){
 		String type="";
 		try{
@@ -398,7 +414,7 @@ public class Vars {
 		return new DefaultAbstractTask();
 	}
 	/**
-	 * 
+	 * generate a random ID for a new item
 	 * @return random ID
 	 */
 	public long generateID(){
@@ -435,7 +451,7 @@ public class Vars {
 		return currID;
 	}
 	/**
-	 * 
+	 * Remove ID from system so that it can be used again
 	 * @param removeID ID to remove
 	 */
 	public void removeID(long removeID){

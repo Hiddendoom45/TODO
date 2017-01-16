@@ -30,12 +30,17 @@ import javax.swing.event.ListSelectionEvent;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+/**
+ * most generic task, something todo and you mark it as complete when you're done
+ * @author Allen
+ *
+ */
 public class EditSingle extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7797758757484527738L;
+	//swing variables and main global variables var and con, for variable, holds most important variables, console is used to log stuff 
 	private JTextField TF_name;
 	private Vector<String> singles=new Vector<String>();
 	private EditVar var;
@@ -47,9 +52,9 @@ public class EditSingle extends JPanel {
 	
 	
 	
-	
+	//drag and dropping of stuff in the list
 	private boolean mListPress=false;
-	private boolean kControl;
+	private boolean kControl;//whether control is pressed, to change between just inserting and swapping the items
 	/**
 	 * Create the panel.
 	 */
@@ -100,7 +105,7 @@ public class EditSingle extends JPanel {
 		gbc_SP_items.gridx = 1;
 		gbc_SP_items.gridy = 1;
 		add(SP_items, gbc_SP_items);
-		
+		//setup list
 		L_single = new JList<String>();
 		L_single.setModel(new AbstractListModel<String>() {
 			
@@ -225,11 +230,12 @@ public class EditSingle extends JPanel {
 				}
 			}
 		});
+		//used for drag and drop in the list
 		L_single.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				L_single.grabFocus();
+				L_single.grabFocus();//grab focus so that there isn't any error with focus lost listeners for text components
 			}
 			public void mousePressed(MouseEvent e){
 				mListPress=true;
@@ -293,6 +299,7 @@ public class EditSingle extends JPanel {
 				}
 			}
 		});
+		//create new item
 		B_new.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SingleItem single=new SingleItem(checkExisting(),var);
@@ -368,6 +375,7 @@ public class EditSingle extends JPanel {
 			return name;
 		}
 	}
+	//for drag and drop, swaps items around in list
 	public void swapItems(int item, int insert){
 		if(item>-1&&insert>-1){
 			SingleItem swap=var.getSingle().get(item);
@@ -377,6 +385,7 @@ public class EditSingle extends JPanel {
 			reset();
 		}
 	}
+	//for drag and drop, move items around in list
 	public void moveItems(int item,int insert){
 		if(item>-1&&insert>-1){
 			SingleItem swap=var.getSingle().get(item);
@@ -385,6 +394,7 @@ public class EditSingle extends JPanel {
 			reset();
 		}
 	}
+	//set values of swing eleents, called when item selected in list is changed or otherwise similar reasons
 	public void setValues(){
 		if(L_single.getSelectedIndex()>-1){
 			TF_name.setText(var.getSingle().get(L_single.getSelectedIndex()).getName());
@@ -400,6 +410,7 @@ public class EditSingle extends JPanel {
 			}
 		}
 	}
+	//reset things and reload things
 	public void reset(){
 		singles.clear();
 		for(int i=0;i<var.getSingle().size();i++){
@@ -409,9 +420,11 @@ public class EditSingle extends JPanel {
 		L_single.updateUI();
 		con.addMsg("[Single] data refreshed/reset");
 	}
+	//used to allow eclipse to render panel properly
 	public JPanel getP_Single(){
 		return this;
 	}
+	//used to switch from viewer to an item in editor withe item selected
 	public void setItemIndex(long ID){
 		for(int i=0;i<var.getSingle().size();i++){
 			if(var.getSingle().get(i).getID()==ID){

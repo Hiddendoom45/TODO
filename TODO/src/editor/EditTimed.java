@@ -34,28 +34,35 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
-
+/**
+ * class for timed items that when completed have a timeout period before they're reset
+ * @author Allen
+ *
+ */
 public class EditTimed extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5365377829709869462L;
+	//main global variables, var is to store main variables, and console is to log stuff.
 	private EditVar var;
 	private Console con;
+	//swing elements
 	private Vector<String> times=new Vector<String>();
 	private JTextField TF_name;
 	private JList<String> L_timed;
 	private JComboBox<String> CB_priority;
 	private JSpinner Sp_d;
-	private JTextArea TA_description;
-	
-	
-	private boolean mListPress;
-	private boolean kControl;
 	private JSpinner Sp_h;
 	private JSpinner Sp_m;
 	private JSpinner Sp_s;
+	private JTextArea TA_description;
+	
+	//for drag and drop stuff in list
+	private boolean mListPress;
+	private boolean kControl;
+	
 
 	/**
 	 * Create the panel.
@@ -106,7 +113,7 @@ public class EditTimed extends JPanel {
 		gbc_SP_timed.gridx = 2;
 		gbc_SP_timed.gridy = 1;
 		add(SP_timed, gbc_SP_timed);
-		
+		//set up list
 		L_timed = new JList<String>();
 		L_timed.setModel(new AbstractListModel<String>() {
 			/**
@@ -174,7 +181,7 @@ public class EditTimed extends JPanel {
 		Sp_s = new JSpinner();
 		Sp_s.setPreferredSize(new Dimension(52, 28));
 		P_elapseTime.add(Sp_s);
-		
+		//various listeners that set the data in edit var when something changes
 		Sp_d.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				int index=L_timed.getSelectedIndex();
@@ -256,7 +263,7 @@ public class EditTimed extends JPanel {
 				}
 			}
 		});
-		
+		//create new item
 		JButton B_new = new JButton("New");
 		GridBagConstraints gbc_B_new = new GridBagConstraints();
 		gbc_B_new.insets = new Insets(0, 0, 5, 5);
@@ -282,7 +289,7 @@ public class EditTimed extends JPanel {
 		gbc_B_delete.gridx = 3;
 		gbc_B_delete.gridy = 6;
 		add(B_delete, gbc_B_delete);
-		
+		//used to set the task for the item
 		JButton B_task = new JButton("Set Task");
 		GridBagConstraints gbc_B_task = new GridBagConstraints();
 		gbc_B_task.insets = new Insets(0, 0, 0, 5);
@@ -408,6 +415,7 @@ public class EditTimed extends JPanel {
 		
 		reset();
 	}
+	//convert the days, hours, minutes, seconds value given in thse spinners to miliseconds, called whenever one of those values changes
 	public void setElapseTime(){
 		if(L_timed.getSelectedIndex()>-1){
 			long elapseTime=(long)((86400*(long)(int)Sp_d.getValue())+(3600*(int)Sp_h.getValue())+(60*(int)Sp_m.getValue())+(int)Sp_s.getValue())*1000;
@@ -457,6 +465,7 @@ public class EditTimed extends JPanel {
 				return name;
 			}
 		}
+		//used for drag and drop in list to swap items
 		public void swapItems(int item, int insert){
 			if(item>-1&&insert>-1){
 				TimedItem swap=var.getTimed().get(item);
@@ -466,6 +475,7 @@ public class EditTimed extends JPanel {
 				reset();
 			}
 		}
+		//used for drag and drop in list to move itms
 		public void moveItems(int item,int insert){
 			if(item>-1&&insert>-1){
 				TimedItem swap=var.getTimed().get(item);
@@ -474,6 +484,7 @@ public class EditTimed extends JPanel {
 				reset();
 			}
 		}
+		//sets the values in the swing elements, called when the item selected in the list is changed
 		public void setValues(){
 			if(L_timed.getSelectedIndex()>-1){
 				TF_name.setText(var.getTimed().get(L_timed.getSelectedIndex()).getName());
@@ -490,6 +501,7 @@ public class EditTimed extends JPanel {
 				TA_description.setText(var.getTimed().get(L_timed.getSelectedIndex()).getDescription());
 			}
 		}
+		//rest things reload things
 		public void reset(){
 			times.clear();
 			L_timed.clearSelection();
@@ -507,9 +519,11 @@ public class EditTimed extends JPanel {
 			L_timed.updateUI();
 			con.addMsg("[Timed]data refreshed/reset for times");
 		}
+		//used to allow eclipse to render panel properly
 		public JPanel getP_Timed(){
 			return this;
 		}
+		//Called by viewer to set selected item to specified id
 		public void setItemIndex(long ID) {
 			for(int i=0;i<var.getTimed().size();i++){
 				if(var.getTimed().get(i).getID()==ID){

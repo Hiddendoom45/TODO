@@ -41,6 +41,7 @@ public class CompleteCallBack implements Runnable {
 			}
 		}
 	}
+	//called by each of the tasks to add to the queue of tasks that are to be set to complete or finished
 	public synchronized void addCompletedTask(long ID){
 		System.out.println("adding completed"+ID);
 		completed.add(ID);

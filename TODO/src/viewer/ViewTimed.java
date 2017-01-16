@@ -22,7 +22,11 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import java.awt.Dimension;
-
+/**
+ * view timed items
+ * @author Allen
+ *
+ */
 public class ViewTimed extends ViewGenerics {
 
 	/**
@@ -292,9 +296,10 @@ public class ViewTimed extends ViewGenerics {
 		while(true){
 			synchronized(this){
 				if(timeToReset>0){
-					timeToReset--;
+					timeToReset--;//time till next reset
 				}
 			}
+			//set time display for time till reset
 			java.awt.EventQueue.invokeLater(new Runnable() {
 			    public void run() {
 			    	if(timeToReset>0){

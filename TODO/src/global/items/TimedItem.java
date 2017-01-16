@@ -12,9 +12,13 @@ import global.Task;
 import global.Vars;
 import global.tasks.DefaultAbstractTask;
 import monitor.monUtil.CallEvent;
-
+/**
+ * item that when completed has a time period after which it will reset
+ * @author Allen
+ *
+ */
 public class TimedItem extends TODOItem implements MonitorItem {
-	private Date startDate=new Date(0);
+	private Date startDate=new Date(0);//last time item was complete
 	private long timeElapse=0;//time before complete task is reset after completetion
 	private Task task=new DefaultAbstractTask();
 	private boolean monitor=false;

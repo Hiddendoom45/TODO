@@ -15,7 +15,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.awt.GridBagConstraints;
 import javax.swing.JTabbedPane;
-
+/**
+ * main class for viewer
+ * @author Allen
+ *
+ */
 public class ViewMain extends JFrame implements Runnable {
 	private ViewVar var;
 	/**

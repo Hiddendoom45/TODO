@@ -17,7 +17,11 @@ import java.awt.Insets;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * main class of program, used to launch the three differnt parts, use this main class to start the program
+ * @author Allen
+ *
+ */
 public class TODOLaunch extends JFrame {
 
 	/**

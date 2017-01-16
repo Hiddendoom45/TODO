@@ -4,7 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-
+/**
+ * settings file containing much of the constants used in the program, mostly file locations
+ * @author Allen
+ *
+ */
 public class Settings {
 	
 	public static String fileSource="/Users/Allen/Desktop/data.xml";

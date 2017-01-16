@@ -10,7 +10,12 @@ import global.items.SingleItem;
 import global.items.TimedItem;
 import monitor.MonMain;
 import viewer.ViewMain;
-
+/**
+ * Used to allow transfer of data in switching between editor viewer etc,(was poorly coded so this was the workaround I came up with)<p>
+ * Uncertain as to whether it works or not, remembered having a lot of trouble geting data transfer working properly
+ * @author Allen
+ *
+ */
 public class ItemData {
 	private ArrayList<Long> ID=new ArrayList<Long>();
 	private ArrayList<DailyItem> dailies=new ArrayList<DailyItem>();

@@ -61,8 +61,8 @@ public class NotifyTask extends Task {
 	}
 
 	public void doTask(){
-		try {
-			BufferedWriter write=new BufferedWriter(new FileWriter(new File(Settings.notifySource+title+".txt")));
+		try {//writes a file which automator detects through folder actions, and shows notification
+			BufferedWriter write=new BufferedWriter(new FileWriter(new File(Settings.notifySource+title+".txt"))); 
 			write.write(message);
 			write.close();
 		} catch (IOException e1) {}
